@@ -15,3 +15,13 @@ describe "Paquete de ladrillos" {
         assert.equals(29, paqueteDeLadrillos.nivelPeligrosidad())
     }
 }
+
+describe "Contenedor portuario" {
+    test "Peso y peligrosidad de un contenedor con Knight Rider y Bumblebee transformado en auto" {
+        contenedorPortuario.cosas().add(knightRider)
+        contenedorPortuario.cosas().add(bumblebee)
+
+        assert.equals(1400, contenedorPortuario.peso())
+        assert.equals(15, contenedorPortuario.nivelPeligrosidad())
+    }
+}

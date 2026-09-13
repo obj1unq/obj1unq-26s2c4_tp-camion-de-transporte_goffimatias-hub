@@ -58,3 +58,87 @@ object paqueteDeLadrillos {
 	}
 
 }
+object arenaAGranel {
+	var property peso = 0
+
+	method nivelPeligrosidad() { return 1 }
+	method estaCargadaEn(unCamion) {
+		return unCamion.cosas().contains(self)
+	}
+}
+
+object bacteriaAntiaerea {
+	var tieneMisiles = false
+
+	// Acciones
+	method ponerMisiles() {
+		tieneMisiles = true
+	}	
+	
+	method quitarMisiles() {
+		tieneMisiles = false
+	}
+
+	// Consultas
+	method peso() {
+		return if (self.estaConMisiles()) { 300 } else { 200 } 
+	}
+
+	method nivelPeligrosidad() {
+		return	if (self.estaConMisiles()) { 100 } else { 0 }
+	}
+
+	method estaConMisiles() {
+		return tieneMisiles
+	}
+
+	method estaCargadaEn(unCamion) {
+		return unCamion.cosas().contains(self)
+	}
+}
+
+object contenedorPortuario {
+	const property cosas = []
+
+	// Consultas
+	method peso() {
+		return 100 + self.pesoTotalDeLasCosas()
+	}
+
+	method pesoTotalDeLasCosas() {
+		return self.cosas().sum({unaCosa => unaCosa.peso()})
+	}
+
+	method nivelPeligrosidad() {
+    	return self.cosas().map({unaCosa => unaCosa.nivelPeligrosidad()}).max()
+	}
+
+	method estaCargadaEn(unCamion) {
+		return unCamion.cosas().contains(self)
+	}
+}
+
+object radioactivos {
+	var property peso = 0
+
+	method nivelPeligrosidad() { return 200 }
+	method estaCargadaEn(unCamion) {
+		return unCamion.cosas().contains(self)
+	}
+}
+
+object embalajeDeSeguridad {
+    var property cosaEnvuelta = null
+
+    method peso() {
+        return cosaEnvuelta.peso()
+    }
+
+    method nivelPeligrosidad() {
+        return cosaEnvuelta.nivelPeligrosidad() / 2
+    }
+
+	method estaCargadaEn(unCamion) {
+		return unCamion.cosas().contains(self)
+	}
+}
