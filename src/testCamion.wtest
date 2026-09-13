@@ -1,0 +1,65 @@
+import camion.*
+import cosas.*
+
+describe "Carga" {
+    test "El peso total del camion luego de cargar a knightRider y bumblebee es el esperado" {
+        camion.cargar(knightRider)
+        camion.cargar(bumblebee)
+        
+        assert.equals(2300, camion.pesoTotal())
+    }
+
+    test "No se puede cargar un objeto al superar la capacidad maxima del camión" {
+        camion.cargar(knightRider)
+        camion.cargar(knightRider)
+        assert.throwsExceptionWithMessage("El objeto supera el peso máximo permitido por el camión", {camion.cargar(bumblebee)})
+    }
+}
+
+describe "Descarga" {
+    test "El peso total del camion luego de descargar a knightRider es el esperado" {
+        camion.cargar(knightRider)
+        camion.cargar(bumblebee)
+        camion.descargar(knightRider)
+        
+        assert.equals(1800, camion.pesoTotal())
+    }
+
+    test "No se puede descargar un objeto que no está cargado en el camión" {
+        camion.cargar(knightRider)
+        assert.throwsExceptionWithMessage("El objeto no está cargado en el camión", {camion.descargar(bumblebee)})
+    }
+}
+
+describe "Metodos restantes del camion" {
+
+    test "excedidoDePeso() es false cuando la carga no supera el peso máximo" {
+        camion.cargar(knightRider)
+        camion.cargar(bumblebee)
+        assert.notThat(camion.excedidoDePeso())
+    }
+
+    test "objetosPeligrosos() devuelve las cosas que superan el nivel de peligrosidad indicado" {
+       camion.cosas().add(knightRider)
+       camion.cosas().add(bumblebee)
+       assert.equals([bumblebee], camion.objetosPeligrosos(12))
+    }
+
+    test "objetosMasPeligrososQue() devuelve a bumblebee cuando se envia a KnightRider como parametro" {
+        camion.cosas().add(bumblebee)
+        assert.equals([bumblebee], camion.objetosMasPeligrososQue(knightRider))
+    }
+
+    test "puedeCircularEnRuta() es false si tiene cargadas cosas que superan el nivel máximo de peligrosidad" {
+        camion.cargar(knightRider)
+        camion.cargar(bumblebee)
+        assert.notThat(camion.puedeCircularEnRuta(5))
+    }
+
+    test "puedeCircularEnRuta() es true si las cosas cargadas no superan el nivel máximo de peligrosidad" {
+        camion.cargar(knightRider)
+        camion.cargar(bumblebee)
+        assert.that(camion.puedeCircularEnRuta(25))
+    }
+}
+
