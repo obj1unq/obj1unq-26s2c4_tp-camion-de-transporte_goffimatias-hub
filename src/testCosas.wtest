@@ -1,0 +1,17 @@
+import cosas.*
+
+describe "Paquete de ladrillos" {
+    test "Peso y peligrosidad de un paquete de 950 ladrillos" {
+        paqueteDeLadrillos.cantidadDeLadrillos(950)
+
+        assert.equals(2000, paqueteDeLadrillos.peso())
+        assert.equals(40, paqueteDeLadrillos.nivelPeligrosidad())
+    }
+
+    test "Peso y peligrosidad de un paquete de 1020 ladrillos" {
+        paqueteDeLadrillos.cantidadDeLadrillos(1020)
+
+        assert.equals(2250, paqueteDeLadrillos.peso())
+        assert.equals(29, paqueteDeLadrillos.nivelPeligrosidad())
+    }
+}
