@@ -63,3 +63,31 @@ describe "Metodos restantes del camion" {
     }
 }
 
+// Agregados
+describe "Agregados al camion" {
+
+    test "tieneAlgoQuePesaEntre() es true si alguna cosa cargada pesa dentro del rango" {
+        camion.cargar(knightRider)
+        camion.cargar(bumblebee)
+        assert.that(camion.tieneAlgoQuePesaEntre(400, 600))
+    }
+
+    test "cosaMasPesada() devuelve la cosa con mayor peso cargada" {
+        camion.cargar(knightRider)
+        camion.cargar(bumblebee)
+        assert.equals(bumblebee, camion.cosaMasPesada())
+    }
+
+    test "totalBultos() suma la cantidad de bultos de todas las cosas cargadas" {
+        camion.cargar(knightRider)
+        camion.cargar(bumblebee)
+        assert.equals(3, camion.totalBultos())
+    }
+
+    test "pesos() devuelve una lista con el peso de cada cosa cargada" {
+        camion.cargar(knightRider)
+        camion.cargar(bumblebee)
+        assert.equals([500, 800], camion.pesos())
+    }
+}
+

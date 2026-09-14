@@ -53,4 +53,21 @@ object camion {
 	method capacidadDisponible() {
 		return pesoMaximo - self.pesoTotal()
 	}
+
+	// Agregados 
+	method tieneAlgoQuePesaEntre(min, max) {
+		return self.cosas().any({ unaCosa => unaCosa.peso().between(min, max) })
+	}
+
+	method cosaMasPesada() {
+		return self.cosas().max({cosa => cosa.peso()})
+	}
+
+	method totalBultos() {
+		return self.cosas().sum({ unaCosa => unaCosa.bultos() })
+	}
+
+	method pesos() {
+		return cosas.map({cosa => cosa.peso()})
+	}
 }

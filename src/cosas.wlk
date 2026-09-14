@@ -2,6 +2,7 @@ object knightRider {
 	// Consultas
 	method peso() { return 500 }
 	method nivelPeligrosidad() { return 10 }
+	method bultos() { return 1 }
 	method estaCargadaEn(unCamion) {
 		return unCamion.cosas().contains(self)
 	}
@@ -16,6 +17,7 @@ object bumblebee {
 	// Consultas
 	method peso() { return 800 }
 	method nivelPeligrosidad() { return if (transformadoEnAuto) { 15 } else { 30 }  }
+	method bultos() { return 2 }
 	method estaCargadaEn(unCamion) {
 		return unCamion.cosas().contains(self)
 	}
@@ -29,8 +31,18 @@ object paqueteDeLadrillos {
 		return self.calcularPesoTotal() 
 	}
 
-	method nivelPeligrosidad() { 
+	method nivelPeligrosidad() {
 		return 0.max(50 - self.refuerzos())
+	}
+
+	method bultos() {
+		if (self.cantidadDeLadrillos() <= 100) {
+			return 1
+		} else if (self.cantidadDeLadrillos() <= 300) {
+			return 2
+		} else {
+			return 3
+		}
 	}
 
 	method estaCargadaEn(unCamion) {
@@ -62,6 +74,7 @@ object arenaAGranel {
 	var property peso = 0
 
 	method nivelPeligrosidad() { return 1 }
+	method bultos() { return 1 }
 	method estaCargadaEn(unCamion) {
 		return unCamion.cosas().contains(self)
 	}
@@ -86,6 +99,10 @@ object bacteriaAntiaerea {
 
 	method nivelPeligrosidad() {
 		return	if (self.estaConMisiles()) { 100 } else { 0 }
+	}
+
+	method bultos() {
+		return if (self.estaConMisiles()) { 2 } else { 1 }
 	}
 
 	method estaConMisiles() {
@@ -113,6 +130,10 @@ object contenedorPortuario {
     	return self.cosas().map({unaCosa => unaCosa.nivelPeligrosidad()}).max()
 	}
 
+	method bultos() {
+		return 1 + self.cosas().sum({unaCosa => unaCosa.bultos()})
+	}
+
 	method estaCargadaEn(unCamion) {
 		return unCamion.cosas().contains(self)
 	}
@@ -122,6 +143,7 @@ object radioactivos {
 	var property peso = 0
 
 	method nivelPeligrosidad() { return 200 }
+	method bultos() { return 1 }
 	method estaCargadaEn(unCamion) {
 		return unCamion.cosas().contains(self)
 	}
@@ -137,6 +159,8 @@ object embalajeDeSeguridad {
     method nivelPeligrosidad() {
         return cosaEnvuelta.nivelPeligrosidad() / 2
     }
+
+    method bultos() { return 2 }
 
 	method estaCargadaEn(unCamion) {
 		return unCamion.cosas().contains(self)
