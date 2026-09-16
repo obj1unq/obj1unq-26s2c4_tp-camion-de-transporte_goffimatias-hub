@@ -16,6 +16,7 @@ object camion {
         	self.error("El objeto supera el peso máximo permitido por el camión")
     	}
 		cosas.add(unaCosa)
+		unaCosa.transformar()
 	}
 
 	method descargar(unaCosa){

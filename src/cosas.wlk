@@ -6,14 +6,17 @@ object knightRider {
 	method estaCargadaEn(unCamion) {
 		return unCamion.cosas().contains(self)
 	}
+
+	// Acciones
+	method transformar() {}
 }
 
 object bumblebee {
 	var transformadoEnAuto = true
-	
-	// Acciones	
-	method transformar() { transformadoEnAuto = not transformadoEnAuto }
-	
+
+	// Acciones
+	method transformar() { transformadoEnAuto = false}
+
 	// Consultas
 	method peso() { return 800 }
 	method nivelPeligrosidad() { return if (transformadoEnAuto) { 15 } else { 30 }  }
@@ -67,17 +70,24 @@ object paqueteDeLadrillos {
 
 	method calcularPesoRefuerzos() {
 		return self.refuerzos() * 10
-	}
+ 	}
+
+	// Acciones
+	method transformar() { self.cantidadDeLadrillos(self.cantidadDeLadrillos() - 12) }
 
 }
 object arenaAGranel {
 	var property peso = 0
 
+	// 	Consultas
 	method nivelPeligrosidad() { return 1 }
 	method bultos() { return 1 }
 	method estaCargadaEn(unCamion) {
 		return unCamion.cosas().contains(self)
 	}
+
+	// Acciones
+	method transformar() { self.peso(self.peso() - 15) }
 }
 
 object bacteriaAntiaerea {
@@ -112,6 +122,9 @@ object bacteriaAntiaerea {
 	method estaCargadaEn(unCamion) {
 		return unCamion.cosas().contains(self)
 	}
+
+	// Acciones
+	method transformar() { self.ponerMisiles() }
 }
 
 object contenedorPortuario {
@@ -137,21 +150,29 @@ object contenedorPortuario {
 	method estaCargadaEn(unCamion) {
 		return unCamion.cosas().contains(self)
 	}
+
+	// Acciones
+	method transformar() { self.cosas().forEach({unaCosa => unaCosa.transformar()}) }
 }
 
 object radioactivos {
 	var property peso = 0
 
+	// Consultas
 	method nivelPeligrosidad() { return 200 }
 	method bultos() { return 1 }
 	method estaCargadaEn(unCamion) {
 		return unCamion.cosas().contains(self)
 	}
+
+	// Acciones
+	method transformar() { self.peso(self.peso() + 15) }
 }
 
 object embalajeDeSeguridad {
     var property cosaEnvuelta = null
 
+	// Consultas
     method peso() {
         return cosaEnvuelta.peso()
     }
@@ -165,4 +186,7 @@ object embalajeDeSeguridad {
 	method estaCargadaEn(unCamion) {
 		return unCamion.cosas().contains(self)
 	}
+
+	// Acciones
+	method transformar() {}
 }

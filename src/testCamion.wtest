@@ -59,7 +59,7 @@ describe "Metodos restantes del camion" {
     test "puedeCircularEnRuta() es true si las cosas cargadas no superan el nivel máximo de peligrosidad" {
         camion.cargar(knightRider)
         camion.cargar(bumblebee)
-        assert.that(camion.puedeCircularEnRuta(25))
+        assert.that(camion.puedeCircularEnRuta(35))
     }
 }
 
@@ -88,6 +88,14 @@ describe "Agregados al camion" {
         camion.cargar(knightRider)
         camion.cargar(bumblebee)
         assert.equals([500, 800], camion.pesos())
+    }
+}
+
+describe "Modificaciones al cargar cosas" {
+
+    test "bumblebee pasa a robot al ser cargado en el camion" {
+        camion.cargar(bumblebee)
+        assert.equals(30, bumblebee.nivelPeligrosidad())
     }
 }
 
